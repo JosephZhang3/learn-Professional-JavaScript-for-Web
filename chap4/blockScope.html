@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function useVar() {
+            if (1 == 1) {
+                var a = 9;
+            }
+            alert(a); //alert 9
+        }
+
+        function useLet() {
+            if (1 == 1) {
+                let a = 9;
+            }
+            alert(a); //Uncaught ReferenceError: a is not defined
+        }
+    </script>
+</head>
+
+<body>
+    <p></p>
+    <p>ES5规范中，JavaScript没有块级作用域，由花括号封闭的代码块并没有自己的作用域，在花括号中用 var 操作符声明的变量，要么归属函数的作用域，要么归属全局作用域。</p>
+    <p>ES6引入了块级作用域，并新增了let命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。如果在花括号中（块级作用域）用 let 操作符声明变量，那么变量的引用范围就限制在花括号（块级作用域）中，在花括号（块级作用域）外部不能被访问到。</p>
+    <br>
+    <br>
+    <input type="button" value="use let operator" onclick="useLet()">
+    <input type="button" value="use var operator" onclick="useVar()">
+</body>
+
+</html>

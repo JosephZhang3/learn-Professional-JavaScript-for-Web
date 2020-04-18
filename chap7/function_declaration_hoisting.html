@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        //function declaration hoisting 函数声明提升，意思就是在调用函数前先读取函数声明。不需要遵循“先声明后调用”的编码原则。
+        //这是动态脚本语言的特性
+        function say() {
+            sayAny();
+
+            function sayAny() {
+                alert('随便讲几句...');
+            }
+        }
+
+        //下面的函数声明方式在早期ECMAScript版本中的表现不稳定，请不要使用
+        // function triggerSayHi() {
+        //     if (1 == 1) {
+        //         function sayhi() {
+        //             alert('hi');
+        //         }
+        //     } else {
+        //         function sayhi() {
+        //             alert('hello');
+        //         }
+        //     }
+        //     sayhi();
+        // }
+
+        //声明不确定函数的最优雅的方式，是声明匿名函数后赋值给变量。
+        function triggerSayHi() {
+            var sayhi;
+            if (1 == 1) {
+                sayhi = function () {
+                    alert('hi');
+                }
+            } else {
+                sayhi = function () {
+                    alert('hello');
+                }
+            }
+            sayhi();
+        }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="say" onclick="say()">
+    <input type="button" value="triggerSayHi" onclick="triggerSayHi()">
+</body>
+
+</html>

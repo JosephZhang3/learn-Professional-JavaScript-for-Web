@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function call() {
+            alert(document.getElementById('num').value);
+
+            //使用命名函数表达式来避免递归调用函数自身时，由于自身被篡改，导致的error
+            var recursiveFactorial = function f(num) {
+                if (num <= 1) {
+                    return 1;
+                }
+                return num * f(num - 1);
+            };
+
+            var recursiveFactorial_copy = recursiveFactorial;
+            recursiveFactorial = null; //即使保存函数的变量recursiveFactorial被置null，但是函数的名字f依然有效，所以后面的递归调用能正常完成
+
+            alert(parseFloat(recursiveFactorial_copy(document.getElementById('num').value)));
+        }
+    </script>
+</head>
+
+<body>
+    <input type="number" id="num">
+    <input type="button" value="阶乘计算" onclick="call()">
+</body>
+
+</html>

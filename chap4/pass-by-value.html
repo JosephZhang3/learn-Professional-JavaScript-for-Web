@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JS按值传递</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <p>虽然说是按值传递，但传递到函数后还是按引用使用。不要误以为是按引用传递！</p>
+    <script src="" async defer>
+        function setName(obj) {
+            obj.name = 'zjh';
+            obj = null; //只是把局部变量（对person对象的引用的一份拷贝）置null了，person对象并不会受到影响
+        }
+        var person = new Object();
+        setName(person);
+        alert(person.name); //zjh
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>XHR</title>
+    <script type="text/javascript">
+        function sendRequest() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) { //已经接收到全部响应数据
+                    console.dir(xhr); //列出XHR对象的所有属性
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                        console.log("ajax请求成功，返回数据为----" + xhr.responseText);
+                    } else {
+                        console.log("ajax请求失败，状态码为----" + xhr.status);
+                    }
+                }
+            };
+
+            xhr.open("post", "http://localhost:8080/findUserWithPagination.do", true); //请求类型、url、是否异步
+            xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+            xhr.send("{'pageSize':'" + "1" + "','currentPageNum':'" + "1" + "'}"); //请求数据可以是纯文本、xml字符串、json字符串等
+            //xhr.send(null);//如果没有请求数据，一定要给默认的null，一定要给默认的null，一定要给默认的null，重要的事情说3遍
+
+            //如何服务器顺利响应，那么XHR的response属性和responseText属性的内容就会是一样的，这一点需要注意。
+            //chrome console output like follow:
+            //ajax请求成功，返回数据为----{"totalSize":2,"dataList":[{"id":"4028ba814ebfc3ce3478bf7fb63e083p","no":"9456","name":"admin","sex":"女","birthDate":"Jan 1, 1994 12:00:00 AM","category":"医生","inpatientArea":"西囡","areaRole":"未知","dept":"管理部","title":"中级","startWorkTime":"Jan 1, 2010 3:04:30 PM"}]}
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="sendRequest()">click me</button>
+
+    <p Ajax和Comet XHR(XMLHttpRequest)对象提供的是浏览器原生的通信能力></p>
+
+</body>
+
+</html>

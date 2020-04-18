@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function createComparisonFunction(propertyName) {
+            return function (object1, object2) {
+                var value1 = object1[propertyName];
+                var value2 = object2[propertyName];
+
+                if (value1 < value2) {
+                    return "first litter than second";
+                } else if (value1 > value2) {
+                    return "first greater than second";
+                } else {
+                    return "two equals";
+                }
+            }
+        }
+
+        function triggerCompare() {
+            var obj1 = {
+                "age": 18
+            };
+            var obj2 = {
+                "age": 24
+            };
+            var comparisonFunction = createComparisonFunction("age");
+            var result = comparisonFunction(obj1, obj2);
+            alert(result); //first litter than second
+        }
+    </script>
+</head>
+
+<body style="background:cadetblue;">
+    <input type="button" value="triggerCompare" onclick="triggerCompare()">
+    <p>闭包是指 有权力访问另一个函数作用域中的变量的函数。可以理解成一个开了挂的函数，能做到普通函数做不到的事情。</p>
+    <p><strong>JavaScript 闭包好处是什么？为什么用到闭包？</strong></p>
+
+    <p> 一、变量的作用域 </p>
+    <p>要理解闭包，首先必须理解Javascript特殊的变量作用域。 变量的作用域无非就是两种：全局作用域和局部作用域。 Javascript语言的特殊之处，就在于函数内部可以直接读取全局变量。
+    </p>
+    <p> 二、如何从外部读取局部变量？</p>
+    <p>出于种种原因，我们有时候需要得到函数内的局部变量。但是，前面已经说过了，正常情况下，这是办不到的，只有通过变通方法才能实现。 那就是在函数的内部，再定义一个函数。
+    </p>
+    <p> 三、闭包的概念 </p>
+    <p>各种专业文献上的“闭包”（closure）定义非常抽象，很难看懂。我的理解是，闭包就是能够读取其它函数内部变量的函数。 由于在Javascript语言中，只有函数内部的子函数才能读取局部变量，因此可以把闭包简单理解成“定义在一个函数内部的函数”。
+        所以，在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。
+    </p>
+    <p> 四、闭包的用途 </p>
+    <p>闭包可以用在许多地方。它的最大用处有两个，一个是前面提到的可以读取其它函数内部的变量，另一个就是让这些变量的值始终保持在内存中。
+    </p>
+    <p> 五、释放闭包占用的内存</p>
+    <p>删除闭包中保存的变量。函数销毁（主动把函数赋为null或者把页面卸载）</p>
+</body>
+
+</html>

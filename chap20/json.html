@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+    <script>
+        /**
+         * 序列化选项
+         */
+        var book = {
+            title: "深入理解Java虚拟机",
+            chapters: [
+                {
+                    chapterName: "hotspot VM",
+                    chapterContent: "最常见的虚拟机实现"
+                }, {
+                    chapterName: "memory optimize",
+                    chapterContent: "内存调优"
+                }
+            ],
+            edition: 2
+        };
+        var jsonText = JSON.stringify(book);//把JSON对象序列化为JSON字符串
+        console.log(jsonText);//输出JSON字符串
+
+        //stringify()函数除了待解析的JSON对象外，还可以接收2个参数；
+
+        //1.第二个参数是数组的情况，序列化的结果字符串只会包含数组中指定的属性
+        var jsonText2 = JSON.stringify(book, ["title", "edition"]);
+        console.log(jsonText2);//{"title":"深入理解Java虚拟机","edition":2}
+        //2.第二个参数是过滤函数的情况，此函数接收两个参数：属性名和属性值
+        var jsonText3 = JSON.stringify(book, function (key, value) {
+            switch (key) {
+                case "chapters":
+                    return value[0].chapterName.toUpperCase();//返回第一章的名称大写
+                case "edition":
+                    return undefined;//删掉edition属性及其值
+                default :
+                    return value;//默认不对值做任何改变
+            }
+        });
+        console.log(jsonText3);
+
+        //第三个参数用于控制结果中的缩进和自动换行（即格式化）,如果字符串不是太长，编程调试时就很有用。
+        var jsonText4 = JSON.stringify(book, null, 2);//每个级别缩进2格
+        console.log(jsonText4);
+
+        /**
+         *toJSON()方法实现自定义的序列化的需求
+         */
+        var book2 = {
+            title: "",
+            chapters: [
+                {
+                    chapterName: "hotspot VM",
+                    chapterContent: "最常见的虚拟机实现"
+                }, {
+                    chapterName: "memory optimize",
+                    chapterContent: "内存调优"
+                }
+            ],
+            edition: 2,
+            toJSON: function () {
+                //如果书没有标题，那么我们说这本书未定义（哪怕它有章节和版本号）
+                if (this.title != "")
+                    return this;
+                else
+                    return undefined;
+            }
+        };
+        var jsonText5 = JSON.stringify(book2);
+        console.log(jsonText5);//undefined
+
+        /**
+         * 解析选项
+         */
+        var bookCopy = JSON.parse(jsonText);//把JSON字符串解析为JSON对象
+        console.log(bookCopy);//输出JSON对象，可以看作book的拷贝
+
+        //parse()方法还可以接受另一个函数作参数
+        var book3 = {
+            title: "深入理解Java虚拟机",
+            chapters: [
+                {
+                    chapterName: "hotspot VM",
+                    chapterContent: "最常见的虚拟机实现"
+                }, {
+                    chapterName: "memory optimize",
+                    chapterContent: "内存调优"
+                }
+            ],
+            edition: 2,
+            publishDate: new Date(2012, 10, 10)
+        };
+        var jsonText6 = JSON.stringify(book3);
+        console.log(jsonText6);
+        //这里的第二个参数为还原函数，解析时将JSON字符串中的日期转换为JSON对象中特定格式的属性值
+        var book3Copy = JSON.parse(jsonText6, function (key, value) {
+            if (key == "publishDate") {
+                var tempDate = new Date(value);
+                return tempDate.getFullYear() + "-" + tempDate.getMonth() + "-" + tempDate.getDate();
+            } else {
+                return value;
+            }
+        });
+        console.log(book3Copy.publishDate);
+
+        //总结：序列化相当于把立体的松散的实体压缩成扁平的紧凑的字符串序列，解析（反序列化）相当于提取字符串的信息还原成立体的充实的实体对象
+    </script>
+</head>
+<body>
+
+</body>
+</html>
